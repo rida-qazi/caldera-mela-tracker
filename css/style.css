@@ -1,9 +1,44 @@
 body{
 margin:0;
-font-family:Inter, Arial, sans-serif;
+font-family:'Montserrat', Arial, sans-serif;
 background:#f5f7fb;
 color:#1a1a1a;
 }
+
+
+/* ---------- SETUP SCREEN ---------- */
+
+.setup-screen{
+max-width:420px;
+margin:auto;
+padding:40px 20px;
+text-align:center;
+}
+
+.setup-screen input{
+width:100%;
+padding:14px;
+font-size:16px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-top:20px;
+margin-bottom:20px;
+}
+
+.start-app-btn{
+width:100%;
+background:#2ecc71;
+color:white;
+padding:14px;
+font-size:16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+
+/* ---------- MAIN APP ---------- */
 
 .app{
 max-width:500px;
@@ -11,16 +46,28 @@ margin:auto;
 padding:20px;
 }
 
-h1{
+
+.title{
 text-align:center;
-margin-bottom:4px;
+font-weight:700;
+margin-bottom:6px;
+}
+
+.subtitle{
+text-align:center;
+color:#666;
+margin-bottom:20px;
 }
 
 #truckID{
 text-align:center;
 color:#666;
 margin-bottom:10px;
+font-weight:600;
 }
+
+
+/* ---------- STATUS ---------- */
 
 #status{
 text-align:center;
@@ -28,6 +75,7 @@ padding:8px;
 border-radius:8px;
 font-weight:bold;
 margin-bottom:12px;
+border:1px solid rgba(0,0,0,0.08);
 }
 
 .status-off{
@@ -39,15 +87,9 @@ color:#b10000;
 background:#e6ffed;
 color:#0f7a32;
 }
-#status{
-text-align:center;
-padding:8px;
-border-radius:8px;
-font-weight:bold;
-margin-bottom:12px;
-border:1px solid rgba(0,0,0,0.08);
-}
 
+
+/* ---------- MAP ---------- */
 
 #map{
 height:48vh;
@@ -58,9 +100,7 @@ border:2px solid #ffffff;
 }
 
 
-
-/* buttons */
-
+/* ---------- BUTTONS ---------- */
 
 .controls{
 margin-top:15px;
@@ -78,6 +118,7 @@ cursor:pointer;
 font-weight:600;
 transition:transform 0.1s ease, box-shadow 0.1s ease;
 }
+
 button:hover{
 transform:translateY(-1px);
 box-shadow:0 3px 8px rgba(0,0,0,0.15);
@@ -94,35 +135,32 @@ color:white;
 }
 
 
+/* ---------- REPORT CARD ---------- */
 
-/* report dropdown */
-
-.report-container{
-margin-top:15px;
-}
-
-.report-toggle{
-width:100%;
-background:#ffffff;
-padding:12px;
-border-radius:10px;
-font-weight:600;
-border:1px solid #ddd;
-}
-
-.report-panel{
-display:none;
+.report-card{
+margin-top:20px;
 background:white;
-padding:16px;
-margin-top:10px;
 border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-font-size:15px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+overflow:hidden;
 }
 
-.report-panel p{
-margin:10px 0;
+.report-header{
+padding:14px 16px;
+font-weight:600;
+cursor:pointer;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+.report-body{
+display:none;
+padding:16px;
+}
+
+.report-item{
 display:flex;
 justify-content:space-between;
+margin:10px 0;
+font-size:15px;
 }
-
