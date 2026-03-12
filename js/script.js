@@ -15,6 +15,7 @@ let drivingEmissions = 0;
 let idleEmissions = 0;
 let totalEmissions = 0;
 let truckMarker;
+let movementBuffer = 0;
 function updateIdleDisplay(){
 
 let mins = Math.floor(idleSeconds / 60);
@@ -97,9 +98,14 @@ new google.maps.LatLng(lat,lng)
 
 );
 
-if(dist < 3){
+movementBuffer += dist;
+
+if(movementBuffer < 8){
 return;
 }
+
+dist = movementBuffer;
+movementBuffer = 0;
 
 totalDistance += dist;
 
@@ -139,6 +145,9 @@ truckMarker.setPosition(point);
 
 
 let speed = position.coords.speed;
+if(speed !== null && speed < 0.3){
+return;
+}
 
 if(speed){
 
@@ -207,5 +216,6 @@ clearInterval(idleInterval);
 
 document.getElementById("status").innerText = "Tracking Off";
 document.getElementById("status").className = "status-off";
+
 
 }
