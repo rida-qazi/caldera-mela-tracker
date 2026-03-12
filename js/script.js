@@ -17,7 +17,14 @@ let truckMarker;
 let truckName = "";
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
+const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
 
+const supabase = window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
 /* ---------- TRUCK SETUP SCREEN ---------- */
 
 function startApp(){
@@ -207,7 +214,21 @@ idleString;
 
 document.getElementById("reportEmissions").innerText =
 emissions + " kg";
+async function sendReport(){
 
+await supabase
+.from("truck_reports")
+.insert([
+{
+truck_name: truckName,
+distance: totalDistance,
+idle_time: idleSeconds,
+emissions: totalEmissions
+}
+]);
+
+}
+sendReport();
 }
 
 
@@ -226,3 +247,4 @@ panel.style.display = "none";
 }
 
 }
+
