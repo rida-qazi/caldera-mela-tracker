@@ -25,34 +25,6 @@ Tracking Off
 
 <div id="map"></div>
 
-<div class="stats">
-
-<div class="stat">
-<span class="label">Distance</span>
-<span class="value" id="distance">0 km</span>
-</div>
-
-<div class="stat">
-<span class="label">Speed</span>
-<span class="value" id="speed">0 km/h</span>
-</div>
-
-<div class="stat">
-<span class="label">Idle Time</span>
-<span class="value" id="idle">0 min</span>
-</div>
-
-<div class="stat emission">
-<span class="label">Estimated CO₂</span>
-<span class="value" id="emissions">0 kg</span>
-</div>
-
-</div>
-
-<div class="stat emission">
-<p>Estimated CO₂</p>
-<h3 id="emissions">0 kg</h3>
-</div>
 
 <div class="controls">
 
@@ -61,16 +33,36 @@ Start Tracking
 </button>
 
 <button onclick="generateReport()">
-Generate / Update Report
+Update Report
 </button>
-  
+
 <button id="stopBtn" onclick="stopTracking()">
 Stop
 </button>
 
 </div>
 
+
+<div class="report-container">
+
+<button class="report-toggle" onclick="toggleReport()">
+Report ▼
+</button>
+
+<div id="reportPanel" class="report-panel">
+
+<p><b>Distance:</b> <span id="reportDistance">-</span></p>
+
+<p><b>Idle Time:</b> <span id="reportIdle">-</span></p>
+
+<p><b>Estimated CO₂:</b> <span id="reportEmissions">-</span></p>
+
 </div>
+
+</div>
+
+</div>
+
 
 <script src="js/script.js"></script>
 
@@ -79,6 +71,5 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACfb4lxE3GVOs4i7RVAYfBNQo
 </script>
 
 </body>
-
 
 </html>
