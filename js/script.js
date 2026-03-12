@@ -2,7 +2,6 @@
 const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
 const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
 
-let supabase;
 
 window.addEventListener("DOMContentLoaded", () => {
     if (window.supabase) {
@@ -262,6 +261,7 @@ emissions: emissions
 ]);
 
 }
+
 
 
 
