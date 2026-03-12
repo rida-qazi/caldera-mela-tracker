@@ -164,3 +164,10 @@ justify-content:space-between;
 margin:10px 0;
 font-size:15px;
 }
+
+.logo{
+width:120px;
+display:block;
+margin:0 auto 15px auto;
+}
+
