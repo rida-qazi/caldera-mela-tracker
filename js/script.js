@@ -14,11 +14,33 @@ let totalEmissions = 0;
 let idleInterval = null;
 
 let truckMarker;
-
-let truckID = "Truck-" + Math.floor(Math.random()*10000);
-document.getElementById("truckID").innerText = truckID;
+let truckName = "";
 
 
+
+/* ---------- TRUCK SETUP SCREEN ---------- */
+
+function startApp(){
+
+let inputName = document.getElementById("truckNameInput").value;
+
+if(inputName.trim() === ""){
+truckName = "Truck-" + Math.floor(Math.random()*1000);
+}
+else{
+truckName = inputName;
+}
+
+document.getElementById("truckID").innerText = truckName;
+
+document.getElementById("setupScreen").style.display = "none";
+document.getElementById("trackerApp").style.display = "block";
+
+}
+
+
+
+/* ---------- MAP INITIALIZATION ---------- */
 
 function initMap(){
 
@@ -50,6 +72,8 @@ polyline.setMap(map);
 
 
 
+/* ---------- START TRACKING ---------- */
+
 function startTracking(){
 
 idleSeconds = 0;
@@ -68,7 +92,7 @@ let lng = position.coords.longitude;
 let point = {lat:lat,lng:lng};
 
 
-// always move truck icon
+// update truck marker
 map.setCenter(point);
 truckMarker.setPosition(point);
 
@@ -81,18 +105,15 @@ new google.maps.LatLng(lat,lng)
 );
 
 
-// movement threshold (meters)
+// movement threshold
 if(dist > 1){
 
-// USER IS MOVING
-
+// moving
 totalDistance += dist;
 
-// draw route
 path.push(point);
 polyline.setPath(path);
 
-// stop idle timer
 clearInterval(idleInterval);
 idleInterval = null;
 
@@ -106,8 +127,7 @@ drivingEmissions = scaledDistance * 1;
 }
 else{
 
-// USER IS IDLE
-
+// idle
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
@@ -124,9 +144,8 @@ idleEmissions += 0.0007;
 }
 
 
-// update emissions internally
+// update emissions
 totalEmissions = drivingEmissions + idleEmissions;
-
 
 lastPosition = {lat,lng};
 
@@ -148,6 +167,8 @@ timeout:5000
 
 
 
+/* ---------- STOP TRACKING ---------- */
+
 function stopTracking(){
 
 navigator.geolocation.clearWatch(watchID);
@@ -160,6 +181,8 @@ document.getElementById("status").className = "status-off";
 }
 
 
+
+/* ---------- GENERATE REPORT ---------- */
 
 function generateReport(){
 
@@ -189,15 +212,17 @@ emissions + " kg";
 
 
 
+/* ---------- REPORT DROPDOWN ---------- */
+
 function toggleReport(){
 
 let panel = document.getElementById("reportPanel");
 
 if(panel.style.display === "none" || panel.style.display === ""){
 panel.style.display = "block";
-}else{
+}
+else{
 panel.style.display = "none";
 }
 
 }
-
