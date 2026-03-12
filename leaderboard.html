@@ -71,11 +71,15 @@ supabaseKey
 
 async function loadLeaderboard(){
 
-const { data } = await supabaseClient
+
+const { data, error } = await supabaseClient
 .from("truck_reports")
 .select("*")
 .order("distance", { ascending:false });
 
+console.log("Supabase data:", data);
+console.log("Supabase error:", error);
+  
 let html = "";
 
 data.forEach(truck => {
