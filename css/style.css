@@ -36,33 +36,51 @@ color:#b10000;
 }
 
 .status-active{
-background:#e2ffe8;
-color:#087a2b;
+background:#e6ffed;
+color:#0f7a32;
+}
+#status{
+text-align:center;
+padding:8px;
+border-radius:8px;
+font-weight:bold;
+margin-bottom:12px;
+border:1px solid rgba(0,0,0,0.08);
 }
 
+
 #map{
-height:45vh;
-border-radius:12px;
-margin-bottom:15px;
+height:48vh;
+border-radius:14px;
+margin-bottom:18px;
+box-shadow:0 6px 14px rgba(0,0,0,0.12);
+border:2px solid #ffffff;
 }
 
 
 
 /* buttons */
 
+
 .controls{
 margin-top:15px;
-display:flex;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
 gap:10px;
 }
 
 button{
-flex:1;
 padding:12px;
-font-size:16px;
+font-size:15px;
 border:none;
 border-radius:10px;
 cursor:pointer;
+font-weight:600;
+transition:transform 0.1s ease, box-shadow 0.1s ease;
+}
+button:hover{
+transform:translateY(-1px);
+box-shadow:0 3px 8px rgba(0,0,0,0.15);
 }
 
 #startBtn{
@@ -95,13 +113,16 @@ border:1px solid #ddd;
 .report-panel{
 display:none;
 background:white;
-padding:15px;
+padding:16px;
 margin-top:10px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+font-size:15px;
 }
 
 .report-panel p{
-margin:8px 0;
-font-size:15px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
 }
+
