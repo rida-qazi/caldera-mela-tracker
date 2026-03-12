@@ -20,18 +20,6 @@ document.getElementById("truckID").innerText = truckID;
 
 
 
-function updateIdleDisplay(){
-
-let mins = Math.floor(idleSeconds / 60);
-let secs = idleSeconds % 60;
-
-document.getElementById("idle").innerText =
-mins + "m " + secs + "s";
-
-}
-
-
-
 function initMap(){
 
 map = new google.maps.Map(document.getElementById("map"),{
@@ -65,7 +53,6 @@ polyline.setMap(map);
 function startTracking(){
 
 idleSeconds = 0;
-updateIdleDisplay();
 
 document.getElementById("status").innerText = "Tracking Active";
 document.getElementById("status").className = "status-active";
@@ -83,7 +70,7 @@ let point = {lat:lat,lng:lng};
 let speed = position.coords.speed;
 
 
-// update truck marker always
+// update truck marker
 map.setCenter(point);
 truckMarker.setPosition(point);
 
@@ -96,7 +83,8 @@ new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
 );
 
-// only count real movement
+
+// detect real walking
 if(dist > 1.5 && speed !== null && speed > 0.2){
 
 totalDistance += dist;
@@ -139,7 +127,7 @@ idleInterval = null;
 }
 
 
-// always keep total emissions updated
+// update emissions value internally
 totalEmissions = drivingEmissions + idleEmissions;
 
 
@@ -178,14 +166,40 @@ document.getElementById("status").className = "status-off";
 
 function generateReport(){
 
-document.getElementById("distance").innerText =
-(totalDistance/1000).toFixed(3) + " km";
+let distanceKm = (totalDistance/1000).toFixed(3);
 
-updateIdleDisplay();
+let mins = Math.floor(idleSeconds / 60);
+let secs = idleSeconds % 60;
+
+let idleString = mins + "m " + secs + "s";
 
 totalEmissions = drivingEmissions + idleEmissions;
 
-document.getElementById("emissions").innerText =
-totalEmissions.toFixed(2) + " kg";
+let emissions = totalEmissions.toFixed(2);
+
+
+// update report panel
+document.getElementById("reportDistance").innerText =
+distanceKm + " km";
+
+document.getElementById("reportIdle").innerText =
+idleString;
+
+document.getElementById("reportEmissions").innerText =
+emissions + " kg";
+
+}
+
+
+
+function toggleReport(){
+
+let panel = document.getElementById("reportPanel");
+
+if(panel.style.display === "none" || panel.style.display === ""){
+panel.style.display = "block";
+}else{
+panel.style.display = "none";
+}
 
 }
