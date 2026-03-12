@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Caldera Tracker</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<h1>Caldera Tracker</h1>
+
+<p id="truckID"></p>
+
+<div id="status" class="status-off">
+Tracking Off
+</div>
+
+<div id="map"></div>
+
+<div class="stats">
+
+<div class="stat">
+<span class="label">Distance</span>
+<span class="value" id="distance">0 km</span>
+</div>
+
+<div class="stat">
+<span class="label">Speed</span>
+<span class="value" id="speed">0 km/h</span>
+</div>
+
+<div class="stat">
+<span class="label">Idle Time</span>
+<span class="value" id="idle">0 min</span>
+</div>
+
+<div class="stat emission">
+<span class="label">Estimated CO₂</span>
+<span class="value" id="emissions">0 kg</span>
+</div>
+
+</div>
+
+<div class="stat emission">
+<p>Estimated CO₂</p>
+<h3 id="emissions">0 kg</h3>
+</div>
+
+<div class="controls">
+
+<button id="startBtn" onclick="startTracking()">
+Start Tracking
+</button>
+
+<button id="stopBtn" onclick="stopTracking()">
+Stop
+</button>
+
+</div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+<script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACfb4lxE3GVOs4i7RVAYfBNQon61X3EVc&libraries=geometry&callback=initMap">
+</script>
+
+</body>
+
+</html>
