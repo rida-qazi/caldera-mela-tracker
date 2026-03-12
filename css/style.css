@@ -170,4 +170,42 @@ width:120px;
 display:block;
 margin:0 auto 15px auto;
 }
+.report-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
+}
+
+.metric-card{
+background:#f9fbff;
+padding:14px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.metric-title{
+font-size:13px;
+color:#666;
+margin-bottom:4px;
+}
+
+.metric-value{
+font-size:20px;
+font-weight:700;
+}
+
+.metric-desc{
+font-size:12px;
+color:#777;
+margin-top:4px;
+}
+
+.explanation{
+font-size:13px;
+background:#eef5ff;
+padding:12px;
+border-radius:8px;
+line-height:1.4;
+}
 
