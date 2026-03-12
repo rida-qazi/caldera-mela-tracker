@@ -67,15 +67,12 @@ let lng = position.coords.longitude;
 
 let point = {lat:lat,lng:lng};
 
-let speed = position.coords.speed;
 
-
-// update truck marker
+// always move truck icon
 map.setCenter(point);
 truckMarker.setPosition(point);
 
 
-// movement detection
 if(lastPosition){
 
 let dist = google.maps.geometry.spherical.computeDistanceBetween(
@@ -84,14 +81,21 @@ new google.maps.LatLng(lat,lng)
 );
 
 
-// detect real walking
-if(dist > 1.5 && speed !== null && speed > 0.2){
+// movement threshold (meters)
+if(dist > 1){
+
+// USER IS MOVING
 
 totalDistance += dist;
 
 // draw route
 path.push(point);
 polyline.setPath(path);
+
+// stop idle timer
+clearInterval(idleInterval);
+idleInterval = null;
+
 
 // driving emissions
 let userDistanceKm = totalDistance / 1000;
@@ -100,34 +104,27 @@ let scaledDistance = userDistanceKm * 100;
 drivingEmissions = scaledDistance * 1;
 
 }
+else{
 
-}
-
-
-// idle detection
-if(speed === null || speed < 0.3){
+// USER IS IDLE
 
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
 
 idleSeconds++;
-
 idleEmissions += 0.0007;
 
 },1000);
 
 }
 
-}else{
-
-clearInterval(idleInterval);
-idleInterval = null;
+}
 
 }
 
 
-// update emissions value internally
+// update emissions internally
 totalEmissions = drivingEmissions + idleEmissions;
 
 
@@ -203,3 +200,4 @@ panel.style.display = "none";
 }
 
 }
+
