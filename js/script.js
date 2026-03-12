@@ -245,6 +245,11 @@ panel.style.display = "none";
 
 async function sendReport(distanceKm, idleTime, emissions){
 
+if(!supabase){
+console.warn("Supabase not ready yet");
+return;
+}
+    
 await supabase
 .from("truck_reports")
 .insert([
@@ -257,6 +262,7 @@ emissions: emissions
 ]);
 
 }
+
 
 
 
