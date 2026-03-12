@@ -87,84 +87,70 @@ let lng = position.coords.longitude;
 
 let point = {lat:lat,lng:lng};
 
+let speed = position.coords.speed;
 
+// Update map visuals first
+path.push(point);
+polyline.setPath(path);
+map.setCenter(point);
+truckMarker.setPosition(point);
+
+
+// SPEED DISPLAY
+if(speed !== null){
+let kmh = (speed * 3.6).toFixed(2);
+document.getElementById("speed").innerText = kmh + " km/h";
+}
+
+
+// DISTANCE + DRIVING EMISSIONS
 if(lastPosition){
 
 let dist = google.maps.geometry.spherical.computeDistanceBetween(
-
 new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
-
 );
-let speed = position.coords.speed;
 
-if(speed === null || speed < 0.5){
-return;
-}
-
+// Only count movement if it looks real
+if(dist > 2 && speed !== null && speed > 0.3){
 
 totalDistance += dist;
 
 document.getElementById("distance").innerText =
 (totalDistance/1000).toFixed(2) + " km";
 
-
-
 let userDistanceKm = totalDistance / 1000;
-
 let scaledDistance = userDistanceKm * 100;
 
 drivingEmissions = scaledDistance * 1;
 
-totalEmissions = drivingEmissions + idleEmissions;
-
-document.getElementById("emissions").innerText =
-totalEmissions.toFixed(2) + " kg";
-
-totalEmissions = drivingEmissions + idleEmissions;
-
-document.getElementById("emissions").innerText =
-totalEmissions.toFixed(2) + " kg";
+}
 
 }
 
-lastPosition = {lat,lng};
+
+// UPDATE TOTAL EMISSIONS DISPLAY
+totalEmissions = drivingEmissions + idleEmissions;
+
+document.getElementById("emissions").innerText =
+totalEmissions.toFixed(2) + " kg";
 
 
-
-path.push(point);
-
-polyline.setPath(path);
-
-map.setCenter(point);
-truckMarker.setPosition(point);
-
-
-let speed = position.coords.speed;
+// IDLE DETECTION
 if(speed !== null && speed < 0.3){
-return;
-}
-
-if(speed){
-
-let kmh = (speed * 3.6).toFixed(2);
-
-document.getElementById("speed").innerText =
-kmh + " km/h";
-
-if(kmh < 1){
 
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
 
 idleSeconds++;
+
 idleEmissions += 0.0007;
+
 totalEmissions = drivingEmissions + idleEmissions;
 
 document.getElementById("emissions").innerText =
 totalEmissions.toFixed(2) + " kg";
-
 
 updateIdleDisplay();
 
@@ -179,23 +165,19 @@ idleInterval = null;
 
 }
 
-}
 
+lastPosition = {lat,lng};
 
 },
 
 (error)=>{
-
 alert("Location permission required");
-
 },
 
 {
-
 enableHighAccuracy:true,
 maximumAge:0,
 timeout:5000
-
 }
 
 );
@@ -215,4 +197,5 @@ document.getElementById("status").className = "status-off";
 
 
 }
+
 
