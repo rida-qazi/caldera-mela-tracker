@@ -1,3 +1,11 @@
+const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
+const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
+
+const supabase = window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
 let map;
 let path = [];
 let polyline;
@@ -17,14 +25,6 @@ let truckMarker;
 let truckName = "";
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
-const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
-
-const supabase = window.supabase.createClient(
-supabaseUrl,
-supabaseKey
-);
 /* ---------- TRUCK SETUP SCREEN ---------- */
 
 function startApp(){
@@ -214,21 +214,7 @@ idleString;
 
 document.getElementById("reportEmissions").innerText =
 emissions + " kg";
-async function sendReport(){
-
-await supabase
-.from("truck_reports")
-.insert([
-{
-truck_name: truckName,
-distance: totalDistance,
-idle_time: idleSeconds,
-emissions: totalEmissions
-}
-]);
-
-}
-sendReport();
+sendReport(distanceKm, idleSeconds, totalEmissions);
 }
 
 
@@ -247,4 +233,20 @@ panel.style.display = "none";
 }
 
 }
+
+async function sendReport(distanceKm, idleTime, emissions){
+
+await supabase
+.from("truck_reports")
+.insert([
+{
+truck_name: truckName,
+distance: totalDistance,
+idle_time: idleTime,
+emissions: emissions
+}
+]);
+
+}
+
 
