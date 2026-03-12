@@ -78,19 +78,55 @@ Report
 
 <div id="reportPanel" class="report-body">
 
-<div class="report-item">
-<span>📍 Distance Travelled</span>
-<span id="reportDistance">-</span>
+<div class="report-grid">
+
+<div class="metric-card">
+
+<div class="metric-title">📍 Distance Travelled</div>
+
+<div class="metric-value" id="reportDistance">-</div>
+
+<div class="metric-desc">
+Total walking route scaled to logistics distance
 </div>
 
-<div class="report-item">
-<span>⏳ Idle Time</span>
-<span id="reportIdle">-</span>
 </div>
 
-<div class="report-item">
-<span>🌍 Estimated CO₂</span>
-<span id="reportEmissions">-</span>
+
+<div class="metric-card">
+
+<div class="metric-title">⏳ Idle Time</div>
+
+<div class="metric-value" id="reportIdle">-</div>
+
+<div class="metric-desc">
+Time spent stationary during the route
+</div>
+
+</div>
+
+
+<div class="metric-card">
+
+<div class="metric-title">🌍 CO₂ Emissions</div>
+
+<div class="metric-value" id="reportEmissions">-</div>
+
+<div class="metric-desc">
+Estimated emissions if this route were driven by a delivery truck
+</div>
+
+</div>
+
+</div>
+
+
+<div class="explanation">
+
+💡 Emissions estimate:  
+Your walking path is scaled to simulate an average delivery truck route.  
+The distance is multiplied to represent real logistics travel and then converted into CO₂ emissions.
+
 </div>
 
 </div>
@@ -110,4 +146,5 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACfb4lxE3GVOs4i7RVAYfBNQo
 </body>
 
 </html>
+
 
