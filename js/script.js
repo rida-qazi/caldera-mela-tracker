@@ -89,11 +89,7 @@ let point = {lat:lat,lng:lng};
 
 let speed = position.coords.speed;
 
-// Update map visuals first
-path.push(point);
-polyline.setPath(path);
-map.setCenter(point);
-truckMarker.setPosition(point);
+
 
 
 // SPEED DISPLAY
@@ -124,8 +120,13 @@ let scaledDistance = userDistanceKm * 100;
 
 drivingEmissions = scaledDistance * 1;
 
-}
 
+path.push(point);
+polyline.setPath(path);
+
+}
+map.setCenter(point);
+truckMarker.setPosition(point);
 }
 
 
@@ -137,7 +138,7 @@ totalEmissions.toFixed(2) + " kg";
 
 
 // IDLE DETECTION
-if(speed !== null && speed < 0.3){
+if(speed === null || speed < 0.3){
 
 if(!idleInterval){
 
@@ -197,5 +198,6 @@ document.getElementById("status").className = "status-off";
 
 
 }
+
 
 
