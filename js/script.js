@@ -121,7 +121,7 @@ new google.maps.LatLng(lat,lng)
 
 
 // movement threshold
-if(dist > 1){
+if(dist > 4){
 
 // moving
 totalDistance += dist;
@@ -266,6 +266,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
