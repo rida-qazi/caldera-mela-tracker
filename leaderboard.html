@@ -45,6 +45,30 @@ font-weight:600;
 color:#555;
 }
 
+.rank{
+font-size:22px;
+font-weight:700;
+width:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.truck-info{
+flex-grow:1;
+padding-left:10px;
+}
+
+.emissions{
+font-weight:600;
+color:#2f7a46;
+}
+
+.leader{
+border:2px solid #ffd700;
+background:#fffdf3;
+}
+
 </style>
 
 </head>
@@ -82,19 +106,32 @@ console.log("Supabase error:", error);
   
 let html = "";
 
-data.forEach(truck => {
+data.forEach((truck, index) => {
+
+let medal = "";
+
+if(index === 0) medal = "🥇";
+else if(index === 1) medal = "🥈";
+else if(index === 2) medal = "🥉";
 
 html += `
-<div class="truck-card">
+<div class="truck-card ${index === 0 ? "leader" : ""}">
 
-<div>
+<div class="rank">
+${medal || index+1}
+</div>
+
+<div class="truck-info">
+
 <div class="truck-name">${truck.truck_name}</div>
+
 <div class="truck-distance">
-${(truck.distance/1000).toFixed(3)} km
-</div>
+${(truck.distance/1000).toFixed(3)} km travelled
 </div>
 
-<div>
+</div>
+
+<div class="emissions">
 🌍 ${truck.emissions.toFixed(2)} kg
 </div>
 
