@@ -9,13 +9,34 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-<div class="app">
 
-<h1>Caldera Tracker</h1>
+<!-- TRUCK NAME SETUP SCREEN -->
+
+<div id="setupScreen" class="setup-screen">
+
+<h1 class="title">Caldera Tracker</h1>
+
+<p class="subtitle">Name your delivery truck</p>
+
+<input id="truckNameInput" placeholder="Enter truck name">
+
+<button class="start-app-btn" onclick="startApp()">Start Tracking</button>
+
+</div>
+
+
+
+<!-- MAIN TRACKER APP -->
+
+<div id="trackerApp" class="app" style="display:none">
+
+<h1 class="title">Caldera Tracker</h1>
 
 <p id="truckID"></p>
 
@@ -23,17 +44,18 @@
 Tracking Off
 </div>
 
+
 <div id="map"></div>
 
 
 <div class="controls">
 
 <button id="startBtn" onclick="startTracking()">
-Start Tracking
+Start
 </button>
 
 <button onclick="generateReport()">
-Update Report
+Update
 </button>
 
 <button id="stopBtn" onclick="stopTracking()">
@@ -43,23 +65,36 @@ Stop
 </div>
 
 
-<div class="report-container">
 
-<button class="report-toggle" onclick="toggleReport()">
-Report ▼
-</button>
+<!-- REPORT CARD -->
 
-<div id="reportPanel" class="report-panel">
+<div class="report-card">
 
-<p><b>Distance:</b> <span id="reportDistance">-</span></p>
+<div class="report-header" onclick="toggleReport()">
+Report
+</div>
 
-<p><b>Idle Time:</b> <span id="reportIdle">-</span></p>
+<div id="reportPanel" class="report-body">
 
-<p><b>Estimated CO₂:</b> <span id="reportEmissions">-</span></p>
+<div class="report-item">
+<span>📍 Distance Travelled</span>
+<span id="reportDistance">-</span>
+</div>
 
+<div class="report-item">
+<span>⏳ Idle Time</span>
+<span id="reportIdle">-</span>
+</div>
+
+<div class="report-item">
+<span>🌍 Estimated CO₂</span>
+<span id="reportEmissions">-</span>
 </div>
 
 </div>
+
+</div>
+
 
 </div>
 
