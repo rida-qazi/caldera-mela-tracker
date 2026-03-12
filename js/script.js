@@ -242,6 +242,8 @@ panel.style.display = "none";
 
 }
 
+ 
+
 async function sendReport(distanceKm, idleTime, emissions){
 
 if(!supabase){
@@ -251,16 +253,20 @@ return;
     
 await supabase
 .from("truck_reports")
-.insert([
+.upsert(
 {
 truck_name: truckName,
 distance: totalDistance,
 idle_time: idleTime,
 emissions: emissions
+},
+{
+onConflict: "truck_name"
 }
-]);
+);
 
 }
+
 
 
 
