@@ -1,10 +1,14 @@
 const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
 const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
 
-const supabase = window.supabase.createClient(
-supabaseUrl,
-supabaseKey
-);
+let supabase;
+
+window.addEventListener("load", () => {
+    supabase = window.supabase.createClient(
+        supabaseUrl,
+        supabaseKey
+    );
+});
 
 let map;
 let path = [];
@@ -248,5 +252,6 @@ emissions: emissions
 ]);
 
 }
+
 
 
