@@ -101,16 +101,20 @@ watchID = navigator.geolocation.watchPosition(
 
 (position)=>{
 
+// ignore bad GPS readings
+if(position.coords.accuracy > 20){
+return;
+}
+
 let lat = position.coords.latitude;
 let lng = position.coords.longitude;
 
 let point = {lat:lat,lng:lng};
 
-
-// update truck marker
 map.setCenter(point);
 truckMarker.setPosition(point);
 
+let speed = position.coords.speed;
 
 if(lastPosition){
 
@@ -120,10 +124,9 @@ new google.maps.LatLng(lat,lng)
 );
 
 
-// movement threshold
-if(dist > 6){
+// REAL MOVEMENT
+if(dist > 6 && speed !== null && speed > 0.5){
 
-// moving
 totalDistance += dist;
 
 path.push(point);
@@ -132,17 +135,17 @@ polyline.setPath(path);
 clearInterval(idleInterval);
 idleInterval = null;
 
-
-// driving emissions
 let userDistanceKm = totalDistance / 1000;
 let scaledDistance = userDistanceKm * 100;
 
 drivingEmissions = scaledDistance * 1;
 
-}
-else{
+// update last position ONLY when real movement happens
+lastPosition = {lat,lng};
 
-// idle
+}else{
+
+// IDLE
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
@@ -156,13 +159,16 @@ idleEmissions += 0.0007;
 
 }
 
+}else{
+
+// first GPS reading
+lastPosition = {lat,lng};
+
 }
 
 
 // update emissions
 totalEmissions = drivingEmissions + idleEmissions;
-
-lastPosition = {lat,lng};
 
 },
 
@@ -177,9 +183,6 @@ timeout:5000
 }
 
 );
-
-}
-
 
 
 /* ---------- STOP TRACKING ---------- */
@@ -266,6 +269,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
