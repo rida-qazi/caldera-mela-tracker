@@ -1,7 +1,7 @@
+let supabase;
 
 const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
 const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
-
 
 window.addEventListener("DOMContentLoaded", () => {
     if (window.supabase) {
@@ -13,6 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
         console.warn("Supabase library not loaded yet.");
     }
 });
+
 
 let map;
 let path = [];
@@ -41,8 +42,7 @@ let inputName = document.getElementById("truckNameInput").value;
 
 if(inputName.trim() === ""){
 truckName = "Truck-" + Math.floor(Math.random()*1000);
-}
-else{
+}else{
 truckName = inputName;
 }
 
@@ -52,7 +52,6 @@ document.getElementById("setupScreen").style.display = "none";
 document.getElementById("trackerApp").style.display = "block";
 
 }
-
 
 
 /* ---------- MAP INITIALIZATION ---------- */
@@ -86,7 +85,6 @@ polyline.setMap(map);
 }
 
 
-
 /* ---------- START TRACKING ---------- */
 
 function startTracking(){
@@ -100,8 +98,7 @@ watchID = navigator.geolocation.watchPosition(
 
 (position)=>{
 
-// ignore bad GPS readings
-if(position.coords.accuracy > 20){
+if(position.coords.accuracy > 25){
 return;
 }
 
@@ -115,7 +112,8 @@ truckMarker.setPosition(point);
 
 let speed = position.coords.speed;
 
-// ----- DISTANCE / MOVEMENT DETECTION -----
+
+// ---------- DISTANCE DETECTION ----------
 
 if(lastPosition){
 
@@ -124,8 +122,8 @@ new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
 );
 
-// real movement
-if(dist > 3 && speed !== null && speed > 0.5){
+// movement threshold
+if(dist > 3){
 
 totalDistance += dist;
 
@@ -141,23 +139,20 @@ drivingEmissions = scaledDistance;
 
 }else{
 
-// first GPS reading
 lastPosition = {lat,lng};
 
 }
 
 
-// ----- IDLE DETECTION -----
+// ---------- IDLE DETECTION ----------
 
 if(speed !== null && speed > 0.4){
 
-// moving → stop idle timer
 clearInterval(idleInterval);
 idleInterval = null;
 
 }else{
 
-// not moving → start idle timer
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
@@ -172,10 +167,8 @@ idleEmissions += 0.0007;
 }
 
 
-// update emissions
 totalEmissions = drivingEmissions + idleEmissions;
 
-// update position for next calculation
 lastPosition = {lat,lng};
 
 },
@@ -191,7 +184,10 @@ timeout:5000
 }
 
 );
+
 }
+
+
 /* ---------- STOP TRACKING ---------- */
 
 function stopTracking(){
@@ -206,12 +202,11 @@ document.getElementById("status").className = "status-off";
 }
 
 
-
 /* ---------- GENERATE REPORT ---------- */
 
 function generateReport(){
 
-let distanceKm = (totalDistance/1000).toFixed(3);
+let distanceKm = totalDistance / 1000;
 
 let mins = Math.floor(idleSeconds / 60);
 let secs = idleSeconds % 60;
@@ -220,21 +215,31 @@ let idleString = mins + "m " + secs + "s";
 
 totalEmissions = drivingEmissions + idleEmissions;
 
-let emissions = totalEmissions.toFixed(2);
 
+// update UI
 
-// update report panel
 document.getElementById("reportDistance").innerText =
-distanceKm + " km";
+distanceKm.toFixed(3) + " km";
 
 document.getElementById("reportIdle").innerText =
 idleString;
 
 document.getElementById("reportEmissions").innerText =
-emissions + " kg";
-sendReport(distanceKm, idleSeconds, totalEmissions);
-}
+totalEmissions.toFixed(2) + " kg";
 
+
+console.log(
+"Sending report:",
+truckName,
+distanceKm,
+idleSeconds,
+totalEmissions
+);
+
+
+sendReport(distanceKm, idleSeconds, totalEmissions);
+
+}
 
 
 /* ---------- REPORT DROPDOWN ---------- */
@@ -245,48 +250,44 @@ let panel = document.getElementById("reportPanel");
 
 if(panel.style.display === "none" || panel.style.display === ""){
 panel.style.display = "block";
-}
-else{
+}else{
 panel.style.display = "none";
 }
 
 }
 
- 
 
-async function sendReport(distanceKm, idleSeconds, totalEmissions){
+/* ---------- SEND REPORT ---------- */
+
+async function sendReport(distanceKm, idleTime, emissions){
 
 if(!supabase){
 console.warn("Supabase not ready yet");
 return;
 }
-    
+
+try{
+
 await supabase
 .from("truck_reports")
 .upsert(
 {
 truck_name: truckName,
 distance: distanceKm,
-idle_time: idleSeconds,
-emissions: totalEmissions
+idle_time: idleTime,
+emissions: emissions
 },
 {
 onConflict: "truck_name"
 }
 );
 
+console.log("Supabase updated");
+
+}catch(err){
+
+console.error("Supabase error:", err);
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
