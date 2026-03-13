@@ -207,7 +207,7 @@ document.getElementById("status").className = "status-off";
 
 function generateReport(){
 
-let distanceKm = (totalDistance/1000);
+let distanceKm = totalDistance / 1000;
 
 let mins = Math.floor(idleSeconds / 60);
 let secs = idleSeconds % 60;
@@ -216,23 +216,23 @@ let idleString = mins + "m " + secs + "s";
 
 totalEmissions = drivingEmissions + idleEmissions;
 
-let emissions = totalEmissions.toFixed(2);
-
 
 // update report panel
+
 document.getElementById("reportDistance").innerText =
-distanceKm + " km";
+distanceKm.toFixed(3) + " km";
 
 document.getElementById("reportIdle").innerText =
 idleString;
 
 document.getElementById("reportEmissions").innerText =
-emissions + " kg";
+totalEmissions.toFixed(2) + " kg";
 
+
+// send to Supabase
 sendReport(distanceKm, idleSeconds, totalEmissions);
 
 }
-
 
 
 /* ---------- REPORT DROPDOWN ---------- */
@@ -275,5 +275,6 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
