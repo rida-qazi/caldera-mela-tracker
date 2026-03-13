@@ -96,7 +96,6 @@ idleSeconds = 0;
 document.getElementById("status").innerText = "Tracking Active";
 document.getElementById("status").className = "status-active";
 
-
 watchID = navigator.geolocation.watchPosition(
 
 (position)=>{
@@ -116,6 +115,8 @@ truckMarker.setPosition(point);
 
 let speed = position.coords.speed;
 
+// ----- DISTANCE / MOVEMENT DETECTION -----
+
 if(lastPosition){
 
 let dist = google.maps.geometry.spherical.computeDistanceBetween(
@@ -123,8 +124,7 @@ new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
 );
 
-
-// REAL MOVEMENT
+// real movement
 if(dist > 3 && speed !== null && speed > 0.5){
 
 totalDistance += dist;
@@ -132,20 +132,23 @@ totalDistance += dist;
 path.push(point);
 polyline.setPath(path);
 
-clearInterval(idleInterval);
-idleInterval = null;
-
 let userDistanceKm = totalDistance / 1000;
 let scaledDistance = userDistanceKm * 100;
 
-drivingEmissions = scaledDistance * 1;
+drivingEmissions = scaledDistance;
 
-// update last position ONLY when real movement happens
-lastPosition = {lat,lng};
+}
 
 }else{
 
-// IDLE DETECTION BASED ON SPEED
+// first GPS reading
+lastPosition = {lat,lng};
+
+}
+
+
+// ----- IDLE DETECTION -----
+
 if(speed !== null && speed > 0.4){
 
 // moving → stop idle timer
@@ -168,16 +171,12 @@ idleEmissions += 0.0007;
 
 }
 
-}else{
-
-// first GPS reading
-lastPosition = {lat,lng};
-
-}
-
 
 // update emissions
 totalEmissions = drivingEmissions + idleEmissions;
+
+// update position for next calculation
+lastPosition = {lat,lng};
 
 },
 
@@ -193,7 +192,6 @@ timeout:5000
 
 );
 }
-
 /* ---------- STOP TRACKING ---------- */
 
 function stopTracking(){
@@ -278,6 +276,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
