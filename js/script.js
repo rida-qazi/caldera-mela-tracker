@@ -125,7 +125,7 @@ new google.maps.LatLng(lat,lng)
 
 
 // REAL MOVEMENT
-if(dist > 6 && speed !== null && speed > 0.5){
+if(dist > 3 && speed !== null && speed > 0.5){
 
 totalDistance += dist;
 
@@ -145,7 +145,16 @@ lastPosition = {lat,lng};
 
 }else{
 
-// IDLE
+// IDLE DETECTION BASED ON SPEED
+if(speed !== null && speed > 0.4){
+
+// moving → stop idle timer
+clearInterval(idleInterval);
+idleInterval = null;
+
+}else{
+
+// not moving → start idle timer
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
@@ -247,7 +256,7 @@ panel.style.display = "none";
 
  
 
-async function sendReport(distanceKm, idleTime, emissions){
+async function sendReport(distanceKm, idleSeconds, totalEmissions){
 
 if(!supabase){
 console.warn("Supabase not ready yet");
@@ -259,9 +268,9 @@ await supabase
 .upsert(
 {
 truck_name: truckName,
-distance: totalDistance,
-idle_time: idleTime,
-emissions: emissions
+distance: distanceKm,
+idle_time: idleSeconds,
+emissions: totalEmissions
 },
 {
 onConflict: "truck_name"
@@ -269,6 +278,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
