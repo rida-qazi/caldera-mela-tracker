@@ -1,9 +1,9 @@
-let supabase;
+let let supabaseClient;
 
 const supabaseUrl = "https://auvpithbsrattacwyvdk.supabase.co";
 const supabaseKey = "sb_publishable_bbueHwws7C0SaYN04H2klw_5yjboqh8";
 
-supabase = window.supabase.createClient(
+supabaseClient = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
 );
@@ -255,12 +255,12 @@ panel.style.display = "none";
 
 async function sendReport(distanceKm, idleSeconds, totalEmissions){
 
-if(!supabase){
+if(!supabaseClient){
 console.warn("Supabase not ready yet");
 return;
 }
 
-await supabase
+await supabaseClient
 .from("truck_reports")
 .upsert(
 {
@@ -275,3 +275,4 @@ onConflict: "truck_name"
 );
 
 }
+
