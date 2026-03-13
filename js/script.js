@@ -93,9 +93,11 @@ document.getElementById("status").className = "status-active";
 watchID = navigator.geolocation.watchPosition(
 
 (position)=>{
+
 console.log("GPS update received");
-// ignore bad GPS readings
-if(position.coords.accuracy > 20){
+
+// allow indoor GPS (previous filter was blocking everything)
+if(position.coords.accuracy > 100){
 return;
 }
 
@@ -109,17 +111,20 @@ truckMarker.setPosition(point);
 
 let speed = position.coords.speed;
 
+
 // ----- DISTANCE / MOVEMENT DETECTION -----
 
 if(lastPosition){
-console.log("distance:", dist);
+
 let dist = google.maps.geometry.spherical.computeDistanceBetween(
 new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
 );
 
-// real movement
-if(dist > 3 && speed !== null && speed > 0.5){
+console.log("distance:", dist);
+
+// detect movement
+if(dist > 1){
 
 totalDistance += dist;
 
@@ -133,11 +138,6 @@ drivingEmissions = scaledDistance;
 
 }
 
-}else{
-
-// first GPS reading
-lastPosition = {lat,lng};
-
 }
 
 
@@ -145,13 +145,11 @@ lastPosition = {lat,lng};
 
 if(speed !== null && speed > 0.4){
 
-// moving → stop idle timer
 clearInterval(idleInterval);
 idleInterval = null;
 
 }else{
 
-// not moving → start idle timer
 if(!idleInterval){
 
 idleInterval = setInterval(()=>{
@@ -169,7 +167,8 @@ idleEmissions += 0.0007;
 // update emissions
 totalEmissions = drivingEmissions + idleEmissions;
 
-// update position for next calculation
+
+// update position for next reading
 lastPosition = {lat,lng};
 
 },
@@ -185,8 +184,8 @@ timeout:5000
 }
 
 );
-}
 
+}
 
 /* ---------- STOP TRACKING ---------- */
 
@@ -277,6 +276,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
