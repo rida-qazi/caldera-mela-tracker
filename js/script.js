@@ -183,7 +183,7 @@ timeout:5000
 }
 
 );
-
+}
 
 /* ---------- STOP TRACKING ---------- */
 
@@ -269,6 +269,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
