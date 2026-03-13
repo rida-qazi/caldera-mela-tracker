@@ -93,7 +93,7 @@ document.getElementById("status").className = "status-active";
 watchID = navigator.geolocation.watchPosition(
 
 (position)=>{
-
+console.log("GPS update received");
 // ignore bad GPS readings
 if(position.coords.accuracy > 20){
 return;
@@ -112,7 +112,7 @@ let speed = position.coords.speed;
 // ----- DISTANCE / MOVEMENT DETECTION -----
 
 if(lastPosition){
-
+console.log("distance:", dist);
 let dist = google.maps.geometry.spherical.computeDistanceBetween(
 new google.maps.LatLng(lastPosition.lat,lastPosition.lng),
 new google.maps.LatLng(lat,lng)
@@ -277,6 +277,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
