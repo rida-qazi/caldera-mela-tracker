@@ -119,7 +119,7 @@ new google.maps.LatLng(lat,lng)
 );
 
 // real movement
-if(dist > 3 && speed !== null && speed > 0.5){
+if(dist > 3){
 
 totalDistance += dist;
 
@@ -277,6 +277,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
