@@ -206,6 +206,8 @@ document.getElementById("status").className = "status-off";
 /* ---------- GENERATE REPORT ---------- */
 
 function generateReport(){
+console.log("Update button pressed");
+console.log(totalDistance, idleSeconds, totalEmissions);
 
 let distanceKm = totalDistance / 1000;
 
@@ -275,6 +277,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
