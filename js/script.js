@@ -95,7 +95,7 @@ watchID = navigator.geolocation.watchPosition(
 (position)=>{
 console.log("GPS update received");
 // ignore bad GPS readings
-if(position.coords.accuracy > 50){
+if(position.coords.accuracy > 20){
 return;
 }
 
@@ -277,6 +277,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
