@@ -95,7 +95,7 @@ watchID = navigator.geolocation.watchPosition(
 (position)=>{
 console.log("GPS update received");
 // ignore bad GPS readings
-if(position.coords.accuracy > 20){
+if(position.coords.accuracy > 50){
 return;
 }
 
@@ -119,7 +119,7 @@ new google.maps.LatLng(lat,lng)
 );
 
 // real movement
-if(dist > 3){
+if(dist > 3 && speed !== null && speed > 0.5){
 
 totalDistance += dist;
 
@@ -277,6 +277,7 @@ onConflict: "truck_name"
 );
 
 }
+
 
 
 
