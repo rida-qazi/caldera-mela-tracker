@@ -14,7 +14,7 @@ Live Fleet Leaderboard • Updates every 5 seconds
 <style>
 
 body {
-  background: linear-gradient(135deg, #f08080 0%, #20b2aa 100%);
+  background: background-color: #faf8f5;
   background-attachment: fixed; /* Keeps the gradient fixed while scrolling */
   font-family: Arial, sans-serif;
   margin: 0;
@@ -26,6 +26,43 @@ text-align:center;
 margin-bottom:30px;
 }
 
+.header-container {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.header-left {
+  flex: 0 0 150px;
+  display: flex;
+  justify-content: center;
+}
+
+.header-right {
+  flex: 1;
+}
+
+.program-description {
+  margin: 0;
+  color: #444;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* Stacks vertically on smaller mobile screens */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+  
 #leaderboard {
   max-width: 900px; /* Increased width to accommodate two columns */
   margin: auto;
