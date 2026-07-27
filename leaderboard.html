@@ -24,9 +24,12 @@ text-align:center;
 margin-bottom:30px;
 }
 
-#leaderboard{
-max-width:600px;
-margin:auto;
+#leaderboard {
+  max-width: 900px; /* Increased width to accommodate two columns */
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates two equal columns */
+  gap: 16px; /* Adds space between items */
 }
 
 .truck-card{
@@ -103,7 +106,6 @@ transition:0.2s;
 <div style="text-align: center; margin-bottom: 20px;">
   <img src="images/caldera mela.png" alt="Tracker code" style="max-width: 150px; height: auto;" />
 </div>
-<h3>Join in!</h3>
 
 <div id="leaderboard"></div>
 
