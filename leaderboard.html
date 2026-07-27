@@ -13,10 +13,12 @@ Live Fleet Leaderboard • Updates every 5 seconds
 
 <style>
 
-body{
-font-family:'Montserrat', Arial, sans-serif;
-background:#f5f7fb;
-padding:30px;
+body {
+  background: linear-gradient(135deg, #f08080 0%, #20b2aa 100%);
+  background-attachment: fixed; /* Keeps the gradient fixed while scrolling */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
 }
 
 h1{
@@ -106,7 +108,7 @@ transition:0.2s;
 <header class="header-container">
   <!-- Left Column: Image / QR Code -->
   <div class="header-left">
-    <img src="images/caldera mela.png" alt="Scan QR Code" class="qr-code" />
+    <img src="images/caldera mela.png" alt="Scan QR Code" style="max-width: 150px; height: auto;" />
   </div>
 
   <!-- Right Column: Program Explanation -->
