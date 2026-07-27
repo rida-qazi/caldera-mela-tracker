@@ -103,10 +103,23 @@ transition:0.2s;
 
 <h1>🚚 Caldera Truck Leaderboard</h1>
 
-<div style="text-align: center; margin-bottom: 20px;">
-  <img src="images/caldera mela.png" alt="Tracker code" style="max-width: 150px; height: auto;" />
-</div>
+<header class="header-container">
+  <!-- Left Column: Image / QR Code -->
+  <div class="header-left">
+    <img src="images/caldera mela.png" alt="Scan QR Code" class="qr-code" />
+  </div>
 
+  <!-- Right Column: Program Explanation -->
+  <div class="header-right">
+    <p class="program-description">
+      Welcome to the Caldera Truck Simulator! This interactive program tracks your walking 
+      distance and calculates the estimated carbon emissions you would produce as a 
+      heavy-duty truck traveling a scaled distance. Scan the QR code to join and view 
+      your ranking on the leaderboard 🐛
+    </p>
+  </div>
+</header>
+  
 <div id="leaderboard"></div>
 
 
